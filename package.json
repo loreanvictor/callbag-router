@@ -1,6 +1,6 @@
 {
   "name": "callbag-router",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An SPA router using Callbags.",
   "main": "dist/es5/index.js",
   "module": "dist/es6/index.js",
@@ -47,6 +47,7 @@
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@rollup/plugin-babel": "^5.2.2",
+    "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.1",
     "@types/chai": "^4.2.14",
     "@types/glob-to-regexp": "^0.4.0",
@@ -87,5 +88,21 @@
   },
   "peerDependencies": {
     "callbag-jsx": "*"
+  },
+  "nyc": {
+    "extends": "nyc-config-tsx",
+    "all": true,
+    "include": [
+      "src/**/*.ts",
+      "src/**/*.tsx"
+    ],
+    "exclude": [
+      "src/**/test/*",
+      "src/types/*"
+    ],
+    "reporter": [
+      "text",
+      "lcov"
+    ]
   }
 }
