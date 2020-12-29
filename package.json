@@ -28,7 +28,9 @@
   "files": [
     "dist/es6",
     "dist/es5",
-    "dist/bundles"
+    "dist/bundles",
+    "browser",
+    "util"
   ],
   "keywords": [
     "SPA",
@@ -50,6 +52,7 @@
     "@types/glob-to-regexp": "^0.4.0",
     "@types/jsdom": "^16.2.5",
     "@types/jsdom-global": "^3.0.2",
+    "@types/lodash.isequal": "^4.5.5",
     "@types/mocha": "^8.2.0",
     "@types/node": "^14.14.16",
     "@types/webpack": "^4.41.25",

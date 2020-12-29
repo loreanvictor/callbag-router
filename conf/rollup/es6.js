@@ -10,6 +10,6 @@ export default Object.assign(base, {
     nodeResolve(),
   ],
   output: Object.assign(base.output, {
-    file: 'dist/bundles/callbag-jsx.es6.min.js',
+    file: 'dist/bundles/callbag-router.es6.min.js',
   }),
 });

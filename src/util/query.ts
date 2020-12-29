@@ -12,7 +12,12 @@ export function serializeQuery(query: QueryParams) {
 export function parseQuery(query: string) {
   return query.split('&').reduce((t, s) => {
     const p = s.split('=');
-    t[decodeURIComponent(p[0])] = decodeURIComponent(p[1] || '');
+    const key = decodeURIComponent(p[0]);
+    const val = decodeURIComponent(p[1]) || '';
+
+    if (key.length > 0) {
+      t[key] = val;
+    }
 
     return t;
   }, {} as QueryParams);

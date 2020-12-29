@@ -9,12 +9,12 @@ export default Object.assign(base, {
   plugins: [
     babel({
       exclude: 'node_modules/**',
-      presets: ["@babel/preset-env"],
+      presets: ['@babel/preset-env'],
     }),
     terser(),
     nodeResolve(),
   ],
   output: Object.assign(base.output, {
-    file: 'dist/bundles/callbag-jsx.es5.min.js',
+    file: 'dist/bundles/callbag-router.es5.min.js',
   }),
 });

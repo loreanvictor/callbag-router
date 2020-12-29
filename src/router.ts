@@ -1,9 +1,12 @@
-import state, { State } from 'callbag-state';
-import { pipe } from 'callbag-common';
+import isEqual from 'lodash.isequal';
+import { state, State } from 'callbag-state';
+import { pipe, subscribe } from 'callbag-common';
+
 import { BrowserRoutingEnvironment } from './browser';
 import { RoutingEnvironment } from './env';
 import { QueryParams, RouteParams } from './types';
 import { absolutify, injectParams, normalize, parseQuery, serializeQuery } from './util';
+
 
 export interface RouterOptions {
   defaultRoute?: string;
@@ -24,12 +27,34 @@ export class Router {
   readonly nav: State<string>;
   readonly query: State<QueryParams>;
 
+  private _clear: () => void;
+
   constructor(options?: RouterOptions) {
     this.defaultRoute = options?.defaultRoute || '';
     this.environment = options?.environment || new BrowserRoutingEnvironment();
 
-    this.nav = state(this.getUrl());
+    this.nav = state(normalize(this.getUrl(), this.defaultRoute));
     this.query = state(this.getQuery());
+
+    this.environment.onPop(() => this.navigate(
+      this.getUrl(),
+      { query: this.getQuery() },
+      false
+    ));
+
+    this._clear = pipe(
+      this.query,
+      subscribe(q => {
+        if (!isEqual(q, this.getQuery())) {
+          const nav = this.nav.get();
+          this.environment.push(nav, serializeQuery(q));
+        }
+      })
+    );
+  }
+
+  clear() {
+    this._clear();
   }
 
   getUrl() { return this.environment.getUrl() || this.defaultRoute; }
@@ -43,11 +68,11 @@ export class Router {
       url => absolutify(this.nav.get(), url),
     );
 
-    this.query.set(options?.query || {});
     if (push) {
       this.environment.push(absolute, serializeQuery(options?.query || {}));
     }
 
+    this.query.set(options?.query || {});
     this.nav.set(absolute);
   }
 }

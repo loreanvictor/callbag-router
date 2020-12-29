@@ -1,7 +1,7 @@
 export default {
   input: 'dist/es6/index.js',
   output: {
-    name: 'callbagJSX',
+    name: 'callbagRouter',
     format: 'iife',
   },
-}
+};

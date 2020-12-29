@@ -16,9 +16,7 @@ export default merge(config, <webpack.Configuration>{
     contentBase: path.resolve(__dirname, '../../dist'),
     overlay: true,
     port: 3000,
-    historyApiFallback: {
-      index: 'dist/index.html',
-    },
+    historyApiFallback: true,
   },
   plugins: [
     new HTMLWebpackPlugin({ title: 'CALLBAG ROUTER DEV' })

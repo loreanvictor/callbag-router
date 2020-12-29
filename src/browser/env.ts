@@ -7,7 +7,7 @@ export class BrowserRoutingEnvironment implements RoutingEnvironment {
   }
 
   getQuery(): string {
-    return window.location.pathname.substr(1).split('?')[1];
+    return window.location.search.substr(1);
   }
 
   push(url: string, query?: string): void {
