@@ -13,7 +13,7 @@ export function parseQuery(query: string) {
   return query.split('&').reduce((t, s) => {
     const p = s.split('=');
     const key = decodeURIComponent(p[0]);
-    const val = decodeURIComponent(p[1]) || '';
+    const val = decodeURIComponent(p[1] || '');
 
     if (key.length > 0) {
       t[key] = val;

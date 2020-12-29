@@ -31,9 +31,7 @@ renderer.render(
   <>
     <Route
       path='/hellow/:name'
-      component={params =>
-        <div>Hellow {pipe(params, map(p => p.name))}!</div>
-      }
+      component={params => <div>Hellow {params.name}!</div>}
     />
     <Route path='/goodbye' component={() => <div>GoodBye!</div>}/>
   </>

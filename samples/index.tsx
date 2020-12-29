@@ -12,6 +12,6 @@ renderer.render(<>
   <button onclick={() => navigate('/b')}>Goto B</button>
   <input _state={query().sub('x')} type='text'/>
 
-  <Route path='a/:id' rerender component={(params) => <div>AAA = {params.id}</div>}/>
+  <Route path='a/:id' component={(params) => <div>AAA = {params.id}</div>}/>
   <Route path='b' component={() => <div>BBB</div>}/>
 </>).on(document.body);
