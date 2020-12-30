@@ -4,4 +4,5 @@ describe('util', () => {
   require('./normalize.test');
   require('./params.test');
   require('./query.test');
+  require('./match.test');
 });
