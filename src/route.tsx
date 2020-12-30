@@ -1,6 +1,9 @@
+import pipe from 'callbag-pipe';
+import subscribe from 'callbag-subscribe';
+import map from 'callbag-map';
 import { RendererLike } from 'render-jsx';
 import { scanRemove } from 'render-jsx/dom/util';
-import { Source, map, pipe, filter, subscribe } from 'callbag-common';
+import { Source } from 'callbag';
 import { Conditional, TrackerComponentThis } from 'callbag-jsx';
 
 import { RouteParams } from './types';
@@ -45,12 +48,13 @@ export function Route(this: TrackerComponentThis, props: RouteProps, renderer: R
     this.track(pipe(
       router.nav,
       map(route => [match(route, path), extractParams(path, route)] as State),
-      filter(state => state[0] !== last[0] || !isEqual(state[1], last[1])),
       subscribe(state => {
-        last = state;
-        scanRemove(start, end, { remove: node => renderer.remove(node) });
-        if (state[0]) {
-          renderer.render(props.component(state[1])).after(start);
+        if (state[0] !== last[0] || !isEqual(state[1], last[1])) {
+          last = state;
+          scanRemove(start, end, { remove: node => renderer.remove(node) });
+          if (state[0]) {
+            renderer.render(props.component(state[1])).after(start);
+          }
         }
       })
     ));

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
-import { pipe, subscribe } from 'callbag-common';
+import pipe from 'callbag-pipe';
+import subscribe from 'callbag-subscribe';
 import state from 'callbag-state';
 import { should } from 'chai';
 import { match } from '../match';
@@ -51,6 +52,6 @@ describe('match()', () => {
     s.set('a/b/b/c/d/e');
     s.set('a/b/c/d/e');
 
-    r.should.eql([false, false, false, false, true, true]);
+    r.should.eql([false, false, false, true, true]);
   });
 });

@@ -1,5 +1,7 @@
 import g2re from 'glob-to-regexp';
-import { expr, Source } from 'callbag-common';
+import map from 'callbag-map';
+import pipe from 'callbag-pipe';
+import { Source } from 'callbag';
 
 
 export function match(target: string, route: string): boolean;
@@ -11,6 +13,6 @@ export function match(target: string | Source<string>, route: string): boolean |
   if (typeof target === 'string') {
     return re.test(target);
   } else {
-    return expr($ => re.test($(target, '')));
+    return pipe(target, map(t => re.test(t)));
   }
 }

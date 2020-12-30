@@ -1,5 +1,6 @@
+import pipe from 'callbag-pipe';
+import subscribe from 'callbag-subscribe';
 import { state, State } from 'callbag-state';
-import { pipe, subscribe } from 'callbag-common';
 
 import { BrowserRoutingEnvironment } from './browser';
 import { RoutingEnvironment } from './env';
