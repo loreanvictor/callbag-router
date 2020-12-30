@@ -5,4 +5,5 @@ describe('util', () => {
   require('./params.test');
   require('./query.test');
   require('./match.test');
+  require('./isequal.test');
 });

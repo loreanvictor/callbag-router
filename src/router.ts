@@ -1,11 +1,10 @@
-import isEqual from 'lodash.isequal';
 import { state, State } from 'callbag-state';
 import { pipe, subscribe } from 'callbag-common';
 
 import { BrowserRoutingEnvironment } from './browser';
 import { RoutingEnvironment } from './env';
 import { QueryParams, RouteParams } from './types';
-import { absolutify, injectParams, normalize, parseQuery, serializeQuery } from './util';
+import { isEqual, absolutify, injectParams, normalize, parseQuery, serializeQuery } from './util';
 
 
 export interface RouterOptions {

@@ -1,4 +1,3 @@
-import isEqual from 'lodash.isequal';
 import { RendererLike } from 'render-jsx';
 import { scanRemove } from 'render-jsx/dom/util';
 import { Source, map, pipe, filter, subscribe } from 'callbag-common';
@@ -7,7 +6,7 @@ import { Conditional, TrackerComponentThis } from 'callbag-jsx';
 import { RouteParams } from './types';
 import { Router } from './router';
 import { Routing } from './singleton';
-import { extractParams, match, normalize } from './util';
+import { extractParams, match, normalize, isEqual } from './util';
 
 
 export interface RoutePropsNoRerender {
