@@ -38,5 +38,11 @@ describe('extractParams()', () => {
       name: 'mr jack'
     });
   });
+
+  it.skip('should properly extract parameters with globstar routes.', () => {
+    extractParams('/hellow/**/world/:name', '/hellow/x/y/world/z').should.eql({
+      name: 'z'
+    });
+  });
 });
 
