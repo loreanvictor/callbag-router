@@ -27,7 +27,8 @@ export class Router {
   readonly nav: State<string>;
   readonly query: State<QueryParams>;
 
-  private _clear: () => void;
+  private _clearN: () => void;
+  private _clearQ: () => void;
 
   constructor(options?: RouterOptions) {
     this.defaultRoute = options?.defaultRoute || '';
@@ -36,13 +37,13 @@ export class Router {
     this.nav = state(normalize(this.getUrl(), this.defaultRoute));
     this.query = state(this.getQuery());
 
-    this.environment.onPop(() => this.navigate(
+    this._clearN = this.environment.onPop(() => this.navigate(
       this.getUrl(),
       { query: this.getQuery() },
       false
     ));
 
-    this._clear = pipe(
+    this._clearQ = pipe(
       this.query,
       subscribe(q => {
         if (!isEqual(q, this.getQuery())) {
@@ -54,11 +55,12 @@ export class Router {
   }
 
   clear() {
-    this._clear();
+    this._clearN();
+    this._clearQ();
   }
 
   getUrl() { return this.environment.getUrl() || this.defaultRoute; }
-  getQuery() { return parseQuery(this.environment.getQuery() || '') || {}; }
+  getQuery() { return parseQuery(this.environment.getQuery() || ''); }
 
   navigate(target: string, options?: NavigationOptions, push = true) {
     const absolute = pipe(

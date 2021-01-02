@@ -1,4 +1,5 @@
 /* istanbul ignore file */
+
 import { RoutingEnvironment } from '../env';
 
 
@@ -16,7 +17,9 @@ export class BrowserHashRoutingEnvironment implements RoutingEnvironment {
     history.pushState(target, '', '#' + target);
   }
 
-  onPop(callback: () => void): void {
+  onPop(callback: () => void) {
     window.addEventListener('popstate', callback);
+
+    return () => window.removeEventListener('popstate', callback);
   }
 }

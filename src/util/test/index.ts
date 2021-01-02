@@ -1,5 +1,5 @@
 describe('util', () => {
-  require('./test-env.test');
+  require('./in-mem-env.test');
   require('./absolutify.test');
   require('./normalize.test');
   require('./params.test');

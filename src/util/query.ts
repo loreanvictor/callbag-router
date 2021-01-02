@@ -3,7 +3,16 @@ import { QueryParams } from '../types';
 
 export function serializeQuery(query: QueryParams) {
   return Object.entries(query)
-    .map(([key, value]) => encodeURIComponent(key) + '=' + encodeURIComponent(value))
+    .map(([key, value]) => {
+      if (key.length === 0) {
+        return;
+      } else if (value.length === 0) {
+        return encodeURIComponent(key);
+      } else {
+        return encodeURIComponent(key) + '=' + encodeURIComponent(value);
+      }
+    })
+    .filter(part => !!part)
     .join('&')
   ;
 }

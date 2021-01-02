@@ -1,11 +1,11 @@
 import { should } from 'chai';
-import { TestRoutingEnvironment } from '../test-env';
+import { InMemRoutingEnvironment } from '../in-mem-env';
 
 should();
 
-describe('TestRoutingEnvironment', () => {
+describe('InMemRoutingEnvironment', () => {
   it('should route using `.push()`.', () => {
-    const env = new TestRoutingEnvironment();
+    const env = new InMemRoutingEnvironment();
 
     env.getUrl().should.equal('');
     env.getQuery().should.equal('');
@@ -20,7 +20,7 @@ describe('TestRoutingEnvironment', () => {
   });
 
   it('should go back using `.back()`.', () => {
-    const env = new TestRoutingEnvironment();
+    const env = new InMemRoutingEnvironment();
 
     env.push('A');
     env.push('B', 'Q');
@@ -44,7 +44,7 @@ describe('TestRoutingEnvironment', () => {
   });
 
   it('should go forward using `.forward()`.', () => {
-    const env = new TestRoutingEnvironment();
+    const env = new InMemRoutingEnvironment();
 
     env.push('A');
     env.push('B', 'Q');
@@ -67,7 +67,7 @@ describe('TestRoutingEnvironment', () => {
   });
 
   it('should seek using `.go()`.', () => {
-    const env = new TestRoutingEnvironment();
+    const env = new InMemRoutingEnvironment();
 
     env.push('A');
     env.push('B', 'Q');
@@ -89,7 +89,7 @@ describe('TestRoutingEnvironment', () => {
   });
 
   it('should remove forward stack when pushed after some seek.', () => {
-    const env = new TestRoutingEnvironment();
+    const env = new InMemRoutingEnvironment();
 
     env.push('A');
     env.push('B', 'Q');
@@ -108,7 +108,7 @@ describe('TestRoutingEnvironment', () => {
   });
 
   it('should call popstate listeners registered with `.onPop()`.', () => {
-    const env = new TestRoutingEnvironment();
+    const env = new InMemRoutingEnvironment();
     const r: any[] = [];
 
     env.onPop(() => r.push([env.getUrl(), env.getQuery()]));
@@ -127,5 +127,24 @@ describe('TestRoutingEnvironment', () => {
     r.should.eql([['B', 'R'], ['A', ''], ['B', 'Q']]);
     env.go(10);
     r.should.eql([['B', 'R'], ['A', ''], ['B', 'Q'], ['C', '']]);
+  });
+
+  it('should not call popstate listeners registered with `.onPop()` after they are cleaned.', () => {
+    const env = new InMemRoutingEnvironment();
+    const r: any[] = [];
+
+    const c = env.onPop(() => r.push([env.getUrl(), env.getQuery()]));
+
+    env.push('A');
+    env.push('B', 'Q');
+    env.push('B', 'R');
+    env.push('C');
+
+    r.should.eql([]);
+    env.back();
+    r.should.eql([['B', 'R']]);
+    c();
+    env.go(-2);
+    r.should.eql([['B', 'R']]);
   });
 });

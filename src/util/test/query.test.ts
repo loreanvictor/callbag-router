@@ -4,11 +4,25 @@ import { parseQuery, serializeQuery } from '../query';
 should();
 
 describe('serializeQuery()', () => {
-  it('should encode query string', () => {
+  it('should encode query string.', () => {
     serializeQuery({
       hellow: 'world',
       name: 'mr jack'
     }).should.equal('hellow=world&name=mr%20jack');
+  });
+
+  it('should ignore empty keys.', () => {
+    serializeQuery({
+      hellow: 'world',
+      '': '42'
+    }).should.equal('hellow=world');
+  });
+
+  it('should properly inject empty values.', () => {
+    serializeQuery({
+      hellow: 'world',
+      also: '',
+    }).should.equal('hellow=world&also');
   });
 });
 

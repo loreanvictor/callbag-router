@@ -1,7 +1,7 @@
 import { RoutingEnvironment } from '../env';
 
 
-export class TestRoutingEnvironment implements RoutingEnvironment {
+export class InMemRoutingEnvironment implements RoutingEnvironment {
   private _stack: string[] = [];
   private _cursor = -1;
   private _poplisteners: (() => void)[] = [];
@@ -34,8 +34,10 @@ export class TestRoutingEnvironment implements RoutingEnvironment {
     this._cursor = this._stack.length - 1;
   }
 
-  onPop(callback: () => void): void {
+  onPop(callback: () => void) {
     this._poplisteners.push(callback);
+
+    return () => this._poplisteners = this._poplisteners.filter(cb => cb !== callback);
   }
 
   forward() {
