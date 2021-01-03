@@ -11,6 +11,8 @@
 
 </div>
 
+<br/><br/>
+
 Routing for single-page applications, using [Callbags](https://github.com/callbag/callbag).
 - Integrates with [`callbag-jsx`](https://loreanvictor.github.io/callbag-jsx/)
 - Can be used independently though (or with other UI libraries and frameworks)
