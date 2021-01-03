@@ -20,8 +20,8 @@ export function initialize(options?: RouterOptions) {
 }
 
 
-export function navigate(target: string, options?: NavigationOptions, push = true) {
-  return Routing.instance.navigate(target, options, push);
+export function navigate(target: string, options?: NavigationOptions) {
+  return Routing.instance.navigate(target, options);
 }
 
 
